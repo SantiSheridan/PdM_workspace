@@ -31,7 +31,8 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "stdint.h"
+#include "stdbool.h"
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
@@ -73,7 +74,34 @@ void Error_Handler(void);
 #define SWO_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */
+typedef uint32_t tick_t;
+typedef bool bool_t;
+typedef struct {
+	tick_t startTime;
+	tick_t duration;
+	bool_t running;
+} delay_t;
 
+void delayInit(delay_t *delay, tick_t duration);
+bool_t delayRead(delay_t *delay);
+void delayWrite(delay_t *delay, tick_t duration);
+
+/* Seleccionar Ejercicio de la practica */
+#define PUNTO 3
+
+
+/* Periodos en ms */
+#define PERIODO_1 100
+#define PERIODO_2 200
+#define PERIODO_3 1000
+
+/* Ciclo de trabajo en % */
+#define DUTY_CICLE_1	50
+#define DUTY_CICLE_2	50
+#define DUTY_CICLE_3	50
+
+/* Cuantas veces va a parpadear el led */
+#define MAX_COUNT 5
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus

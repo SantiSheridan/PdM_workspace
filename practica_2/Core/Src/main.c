@@ -18,43 +18,12 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include "stdint.h"
-#include "stdbool.h"
 
 UART_HandleTypeDef huart2;
 
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_USART2_UART_Init(void);
-
-typedef uint32_t tick_t;
-typedef bool bool_t;
-typedef struct {
-	tick_t startTime;
-	tick_t duration;
-	bool_t running;
-} delay_t;
-
-void delayInit(delay_t *delay, tick_t duration);
-bool_t delayRead(delay_t *delay);
-void delayWrite(delay_t *delay, tick_t duration);
-
-/* Seleccionar Ejercicio de la practica */
-#define PUNTO 3
-
-
-/* Periodos en ms */
-#define PERIODO_1 100
-#define PERIODO_2 200
-#define PERIODO_3 1000
-
-/* Ciclo de trabajo en % */
-#define DUTY_CICLE_1	50
-#define DUTY_CICLE_2	80
-#define DUTY_CICLE_3	90
-
-/* Cuantas veces va a parpadear el led */
-#define MAX_COUNT 5
 
 int main(void)
 {
