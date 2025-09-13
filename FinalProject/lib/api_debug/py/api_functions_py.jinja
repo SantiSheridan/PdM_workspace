@@ -1,0 +1,7 @@
+from api_call import api_call
+
+{% for name, param in funcDict|dictsort %}
+def {{ name }}({% for arg in param.wargs %}{{ arg }}{% if not loop.last %}, {% endif %}{% endfor %}):
+    p = {{ param }}
+    api_call(p, [{% for arg in param.wargs %}{{ arg }}{% if not loop.last %}, {% endif %}{% endfor %}])
+{% endfor %}

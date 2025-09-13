@@ -1,0 +1,7 @@
+
+
+#include "api_utils.h"
+
+{% for fname, fdata in funcDict.items() %}
+retType {{ fname }}({% for t, a in zip(fdata.carg, fdata.arg) %}{{ t }} {{ a }}{% if not loop.last %}, {% endif %}{% endfor %});
+{% endfor %}

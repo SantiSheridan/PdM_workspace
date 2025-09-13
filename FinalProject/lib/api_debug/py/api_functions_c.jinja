@@ -1,0 +1,18 @@
+#include "api_types.h"
+#include "api_functions.h"
+
+{% for inc in includes %}
+#include "{{ inc }}"
+{% endfor %}
+
+const FPTRS FUNCTIONS_FPTRS[FUNCTIONS_COUNT] = {
+{% for name, param in funcDict|dictsort %}
+    // Func id = {{ param.id }}
+    {
+        .nargs      = {{ param.nargs }},
+        .arg_types  = { {{ param.arg_types | join(', ') }} },
+        .arg_lens   = { {{ param.arg_lens | join(', ') }} },
+        .fptr       = { .f{{ param.nargs }} = (fptr_{{ param.nargs }}) {{ name }} },
+    },
+{% endfor %}
+};
