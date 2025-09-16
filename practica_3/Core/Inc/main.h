@@ -26,12 +26,13 @@
 extern "C" {
 #endif
 
-
-#include "stm32f4xx_hal.h"
-
-
 #include "stdint.h"
 #include "stdbool.h"
+
+#include "stm32f4xx_hal.h"
+#include "api_delay.h"
+
+
 
 void Error_Handler(void);
 
@@ -50,6 +51,24 @@ void Error_Handler(void);
 #define TCK_GPIO_Port GPIOA
 #define SWO_Pin GPIO_PIN_3
 #define SWO_GPIO_Port GPIOB
+
+/* Seleccionar Ejercicio de la practica */
+#define PUNTO 3
+
+/* Periodos en ms */
+#define PERIODO_1 500
+#define PERIODO_2 100
+#define PERIODO_3 100
+#define PERIODO_4 1000
+
+/* Ciclo de trabajo en % */
+#define DUTY_CICLE_1	50
+#define DUTY_CICLE_2	50
+#define DUTY_CICLE_3	50
+#define DUTY_CICLE_4	50
+
+/* Cuantas veces va a parpadear el led */
+#define MAX_COUNT 5
 
 #ifdef __cplusplus
 }

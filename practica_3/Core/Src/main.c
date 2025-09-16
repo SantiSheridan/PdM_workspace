@@ -18,25 +18,8 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include "API_delay.h"
 
-/* Seleccionar Ejercicio de la practica */
-#define PUNTO 3
 
-/* Periodos en ms */
-#define PERIODO_1 100
-#define PERIODO_2 200
-#define PERIODO_3 1000
-#define PERIODO_4 2000
-
-/* Ciclo de trabajo en % */
-#define DUTY_CICLE_1	50
-#define DUTY_CICLE_2	50
-#define DUTY_CICLE_3	50
-#define DUTY_CICLE_4	50
-
-/* Cuantas veces va a parpadear el led */
-#define MAX_COUNT 5
 
 UART_HandleTypeDef huart2;
 
@@ -114,6 +97,7 @@ int main(void)
 		}
 
 		delayRead(&mi_delay);
+
 		if (delayIsRunning(&mi_delay)) continue;
 
 		if (count % 2){
