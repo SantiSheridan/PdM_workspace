@@ -7,19 +7,6 @@
 #include "api_types.h"
 #include "api_functions.h"
 
-/* Registers in the frames*/
-/* API CALL COMMANDS */
-#define CMD_API_WRITE               0x20
-#define CMD_API_CHECK               0x21
-#define CMD_API_READ                0x22
-
-
-/* API CALL STATUS */
-#define API_CALL_STATUS_BUSY        0  // The MCU is calling busy with the API CALL                  
-#define API_CALL_STATUS_READY       1  // API CALL is ready to read
-#define API_CALL_STATUS_ERR         2  // API CALL FAIL
-
-
 /* Registers in API CALL Frame */
 #define REG_API_CMD                 0
 
@@ -38,36 +25,28 @@
 
 
 /*
-API CALL FRAME
-                   | -> data receive for execute_api
-+------------------+-------------------+---------------------+--------------------+
-| API CMD (u8) [W] | FUNC ID (u16) [W] | ARG TYPES(8*u8) [W] | DATA WRITE [W] ... |
-+------------------+-------------------+---------------------+--------------------+
+API WRITE
+                   | -> data receive for execute_api (api_data_write)
++------------------+-------------------+--------------------+
+| API CMD (u8) [W] | FUNC ID (u16) [W] | DATA WRITE [W] ... |
++------------------+-------------------+--------------------+
 
-API CALL FRAME    | Return By UART Driver
-+-----------------+------------+
-| API_CMD (u8)[W] | STATUS (R) | 
-+-----------------+------------+
+API GET STATUS     | Return By UART Driver (api_status)
++------------------+------------+
+| API_CMD (u8) [W] | STATUS (R) | 
++------------------+------------+
 
-API_READ          | Return By UART Driver
-+-----------------+-------------------+
-| API_CMD (u8)[W] | DATA READ [R] ... |
-+-----------------+-------------------+
+API READ           | Return By UART Driver (api_data_read)
++------------------+-------------------+
+| API_CMD (u8) [W] | DATA READ [R] ... |
++------------------+-------------------+
 */
 
 
 
-u8 api_data_write[2048] = {0};
-u8 api_data_read[2048] = {0};
+u8 api_data_write[API_BUFFER_SIZE] = {0};
+u8 api_data_read[API_BUFFER_SIZE] = {0};
 u8 api_status = 0;
-/* 
-** data_write = {          Data write          } Filled by UART
-**                 0x07 - 0x0000008 - 0x0000
-**                  u8       u32       u16
-** data_read  = {           Data read          } Filled by exetute_api
-**                 0x07 - 0x0000008 - 0x0000
-**                  u8       u32       u16
-*/
 
 const FPTRS *find_api(u16 func_id)
 {
@@ -85,7 +64,7 @@ retType execute_api(u16 func_id, u8 *data_write, u8 *data_read){
     uintptr_t args[8] = { 0 };
 
     /* Processing API */
-    api_status = API_CALL_STATUS_BUSY;
+    api_status = API_STATUS_BUSY;
 
     const FPTRS *api = find_api(func_id);
 
@@ -137,7 +116,7 @@ retType execute_api(u16 func_id, u8 *data_write, u8 *data_read){
                         break;
                     }
                     default:
-                        api_status = API_CALL_STATUS_ERR;
+                        api_status = API_STATUS_ERR;
                         return API_ERR;
                         break;
                     }
@@ -170,10 +149,10 @@ retType execute_api(u16 func_id, u8 *data_write, u8 *data_read){
                 break;
         }
     } else{
-        api_status = API_CALL_STATUS_ERR;
+        api_status = API_STATUS_ERR;
         return API_ERR;
     }
-    api_status = API_CALL_STATUS_READY;
+    api_status = API_STATUS_READY;
     return ret;
 }
 

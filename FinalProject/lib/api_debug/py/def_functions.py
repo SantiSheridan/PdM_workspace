@@ -1,24 +1,9 @@
-defines = {}
+c_inc = [
+    'api_utils.h',
+]
 enums = {}
 
-functions = {
-    'register_set' : {
-        'type': 'function',
-        'returns': 'retType',
-        'comment': '',
-        'args': {
-            'addr' : {
-                'type': 'U32',
-                'count': 1,
-                'comment':''
-            },
-            'value': {
-                'type': 'U32',
-                'count': 1,
-                'comment':''
-            }
-        }
-    },
+funcDict = {
     'register_get' : {
         'type': 'function',
         'returns': 'retType',
@@ -32,6 +17,23 @@ functions = {
             'value': {
                 'type': 'PR_U32',
                 'count' : 1,
+                'comment':''
+            }
+        }
+    },
+    'register_set' : {
+        'type': 'function',
+        'returns': 'retType',
+        'comment': '',
+        'args': {
+            'addr' : {
+                'type': 'U32',
+                'count': 1,
+                'comment':''
+            },
+            'value': {
+                'type': 'U32',
+                'count': 1,
                 'comment':''
             }
         }

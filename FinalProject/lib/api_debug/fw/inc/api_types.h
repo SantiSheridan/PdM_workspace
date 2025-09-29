@@ -1,7 +1,8 @@
-#include <stdint.h>
-
 #ifndef __API_TYPES_H
 #define __API_TYPES_H
+
+#include <stdint.h>
+#include <stddef.h>
 
 typedef uint8_t u8;
 typedef int8_t s8;
@@ -67,6 +68,26 @@ typedef retType (*fptr_2) (uintptr_t arg0, uintptr_t arg1);
 typedef retType (*fptr_3) (uintptr_t arg0, uintptr_t arg1, uintptr_t arg2);
 typedef retType (*fptr_4) (uintptr_t arg0, uintptr_t arg1, uintptr_t arg2, uintptr_t arg3);
 typedef retType (*fptr_5) (uintptr_t arg0, uintptr_t arg1, uintptr_t arg2, uintptr_t arg3, uintptr_t arg4);
+
+/* Registers in the frames*/
+/* API CALL COMMANDS */
+#define API_CMD_WRITE               0x20
+#define API_CMD_GET_STATUS          0x21
+#define API_CMD_READ                0x22
+
+
+/* API CALL STATUS */
+#define API_STATUS_BUSY        0  // The MCU is calling busy with the API CALL                  
+#define API_STATUS_READY       1  // API CALL is ready to read
+#define API_STATUS_ERR         2  // API CALL FAIL
+
+/* API CALL Registers */
+#define API_REG_CMD            0
+#define API_REG_FUNC_ID_MSB    1
+#define API_REG_FUNC_ID_LSB    2
+#define API_REG_START_WDATA    3
+
+#define API_BUFFER_SIZE        2048
 
 retType execute_api(u16 func_id, u8 *data_write, u8 *data_read);
 

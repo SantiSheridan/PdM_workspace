@@ -56,7 +56,12 @@ target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     ${CMAKE_SOURCE_DIR}/lib/api_debug/fw/src/api_utils.c
 
     #Lib/mcu_446re
-    ${CMAKE_SOURCE_DIR}/lib/mcu_446re/fw/src/dev_uart.c
+    ${CMAKE_SOURCE_DIR}/lib/mcu_446re/fw/src/drv_uart.c
+    ${CMAKE_SOURCE_DIR}/lib/mcu_446re/fw/src/drv_spi.c
+
+    #Lib/sx1278
+    ${CMAKE_SOURCE_DIR}/lib/sx1278/fw/src/drv_sx1278.c
+    ${CMAKE_SOURCE_DIR}/lib/sx1278/fw/src/drv_sx1278_port.c
 )
 
 # Add include paths
@@ -70,6 +75,11 @@ target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
     #Lib/mcu_446re
     ${CMAKE_SOURCE_DIR}/lib/mcu_446re/fw/src
     ${CMAKE_SOURCE_DIR}/lib/mcu_446re/fw/inc
+
+    #Lib/sx1278
+    ${CMAKE_SOURCE_DIR}/lib/sx1278/fw/src
+    ${CMAKE_SOURCE_DIR}/lib/sx1278/fw/inc
+
 )
 
 # Add project symbols (macros)

@@ -1,0 +1,12 @@
+from api_call import api_call
+from api_types import convert_bitlist_to_args
+
+{% for name, param in funcDict|dictsort %}
+def {{ name }}({% for arg in param.wargs %}{{ arg }}{% if not loop.last %}, {% endif %}{% endfor %}):
+    params = {{ param }}
+    ret, data_read = api_call(params, [{% for arg in param.wargs %}{{ arg }}{% if not loop.last %}, {% endif %}{% endfor %}])
+    retvals = convert_bitlist_to_args(params, data_read)
+    {% for rarg in param.rargs %}{{ rarg }} = retvals[{{ loop.index0 }}] {% endfor %}
+
+    {% if param.rargs | length > 0 %}return ret, ({{ param.rargs | join(', ') }}) {% else %}return ret {% endif %}
+{% endfor %}
